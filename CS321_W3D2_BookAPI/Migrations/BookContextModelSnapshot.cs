@@ -14,7 +14,7 @@ namespace CS321_W3D2_BookAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity("CS321_W3D2_BookAPI.Models.Author", b =>
                 {
@@ -55,11 +55,15 @@ namespace CS321_W3D2_BookAPI.Migrations
 
                     b.Property<int>("AuthorId");
 
+                    b.Property<int?>("PublisherId");
+
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("PublisherId");
 
                     b.ToTable("Books");
 
@@ -84,12 +88,52 @@ namespace CS321_W3D2_BookAPI.Migrations
                         });
                 });
 
+            modelBuilder.Entity("CS321_W3D2_BookAPI.Models.Publisher", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CountryOfOrigin");
+
+                    b.Property<int>("FoundedYear");
+
+                    b.Property<string>("HeadQuartersLocation");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Publishers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CountryOfOrigin = "USA",
+                            FoundedYear = 1925,
+                            HeadQuartersLocation = "NY, NY",
+                            Name = "Viking Press"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CountryOfOrigin = "USA",
+                            FoundedYear = 1897,
+                            HeadQuartersLocation = "NY, NY",
+                            Name = "Doubleday"
+                        });
+                });
+
             modelBuilder.Entity("CS321_W3D2_BookAPI.Models.Book", b =>
                 {
                     b.HasOne("CS321_W3D2_BookAPI.Models.Author", "Author")
                         .WithMany("Books")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CS321_W3D2_BookAPI.Models.Publisher")
+                        .WithMany("Books")
+                        .HasForeignKey("PublisherId");
                 });
 #pragma warning restore 612, 618
         }

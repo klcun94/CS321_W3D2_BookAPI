@@ -23,13 +23,30 @@ namespace CS321_W3D2_BookAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Publishers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: true),
+                    FoundedYear = table.Column<int>(nullable: false),
+                    CountryOfOrigin = table.Column<string>(nullable: true),
+                    HeadQuartersLocation = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Publishers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Books",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(nullable: true),
-                    AuthorId = table.Column<int>(nullable: false)
+                    AuthorId = table.Column<int>(nullable: false),
+                    PublisherId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,6 +57,12 @@ namespace CS321_W3D2_BookAPI.Migrations
                         principalTable: "Authors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Books_Publishers_PublisherId",
+                        column: x => x.PublisherId,
+                        principalTable: "Publishers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -53,24 +76,39 @@ namespace CS321_W3D2_BookAPI.Migrations
                 values: new object[] { 2, new DateTime(1947, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), "Stephen", "King" });
 
             migrationBuilder.InsertData(
-                table: "Books",
-                columns: new[] { "Id", "AuthorId", "Title" },
-                values: new object[] { 1, 1, "The Grapes of Wrath" });
+                table: "Publishers",
+                columns: new[] { "Id", "CountryOfOrigin", "FoundedYear", "HeadQuartersLocation", "Name" },
+                values: new object[] { 1, "USA", 1925, "NY, NY", "Viking Press" });
+
+            migrationBuilder.InsertData(
+                table: "Publishers",
+                columns: new[] { "Id", "CountryOfOrigin", "FoundedYear", "HeadQuartersLocation", "Name" },
+                values: new object[] { 2, "USA", 1897, "NY, NY", "Doubleday" });
 
             migrationBuilder.InsertData(
                 table: "Books",
-                columns: new[] { "Id", "AuthorId", "Title" },
-                values: new object[] { 2, 1, "Cannery Row" });
+                columns: new[] { "Id", "AuthorId", "PublisherId", "Title" },
+                values: new object[] { 1, 1, null, "The Grapes of Wrath" });
 
             migrationBuilder.InsertData(
                 table: "Books",
-                columns: new[] { "Id", "AuthorId", "Title" },
-                values: new object[] { 3, 2, "The Shining" });
+                columns: new[] { "Id", "AuthorId", "PublisherId", "Title" },
+                values: new object[] { 2, 1, null, "Cannery Row" });
+
+            migrationBuilder.InsertData(
+                table: "Books",
+                columns: new[] { "Id", "AuthorId", "PublisherId", "Title" },
+                values: new object[] { 3, 2, null, "The Shining" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_AuthorId",
                 table: "Books",
                 column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Books_PublisherId",
+                table: "Books",
+                column: "PublisherId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -80,6 +118,9 @@ namespace CS321_W3D2_BookAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Authors");
+
+            migrationBuilder.DropTable(
+                name: "Publishers");
         }
     }
 }
