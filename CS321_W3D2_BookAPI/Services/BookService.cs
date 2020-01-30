@@ -13,13 +13,13 @@ namespace CS321_W3D2_BookAPI.Services
 
         public BookService(BookContext bookContext)
         {
-            // TODO: keep a reference to the BookContext in _bookContext
+            // keep a reference to the BookContext in _bookContext
             _bookContext = bookContext;
         }
 
         public Book Add(Book book)
         {
-            // TODO: implement add
+            // implement add
             _bookContext.Books.Add(book);
             _bookContext.SaveChanges();
             return book;
@@ -27,7 +27,7 @@ namespace CS321_W3D2_BookAPI.Services
 
         public Book Get(int id)
         {
-            // TODO: return the specified Book using Find()
+            // return the specified Book using Find()
             return _bookContext.Books
                 .Include(b => b.Author)
                 .SingleOrDefault(b => b.Id == id);
@@ -35,7 +35,7 @@ namespace CS321_W3D2_BookAPI.Services
 
         public IEnumerable<Book> GetAll()
         {
-            // TODO: return all Books using ToList()
+            // return all Books using ToList()
             return _bookContext.Books.Include(b => b.Author).ToList();
         }
 
@@ -65,7 +65,7 @@ namespace CS321_W3D2_BookAPI.Services
 
         public void Remove(Book book)
         {
-            // TODO: remove the book
+            // remove the book
             _bookContext.Books.Remove(book);
             _bookContext.SaveChanges();
         }

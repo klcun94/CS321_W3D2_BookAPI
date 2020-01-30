@@ -13,11 +13,11 @@ namespace CS321_W3D2_BookAPI.Controllers
         // Constructor
         public AuthorsController(IAuthorService authorService)
         {
-            // TODO: keep a reference to the service so we can use below
+            // keep a reference to the service so we can use below
             _authorService = authorService;
         }
 
-        // TODO: get all authors
+        // get all authors
         // GET api/authors
         [HttpGet]
         public IActionResult Get()
@@ -56,7 +56,7 @@ namespace CS321_W3D2_BookAPI.Controllers
             return CreatedAtAction("Get", new { Id = newAuthor.Id }, newAuthor);
         }
 
-        // TODO: update an existing author
+        // update an existing author
         // PUT api/authors/:id
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Author updatedAuthor)
@@ -66,7 +66,7 @@ namespace CS321_W3D2_BookAPI.Controllers
             return Ok(author);
         }
 
-        // TODO: delete an existing author
+        // delete an existing author
         // DELETE api/authors/:id
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

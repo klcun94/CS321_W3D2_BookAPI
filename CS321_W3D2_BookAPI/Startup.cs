@@ -28,14 +28,16 @@ namespace CS321_W3D2_BookAPI
                     optionsBuilder.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 
-            // TODO: register the BookContext for injection using AddDbContext
+            // register the BookContext for injection using AddDbContext
             services.AddDbContext<BookContext>();
 
-            // TODO: register the BookService for injection using AddScoped
+            // register the BookService for injection using AddScoped
             services.AddScoped<IBookService, BookService>();
 
-            // TODO: register the AuthorService for injection using AddScoped   
+            // register the AuthorService for injection using AddScoped   
             services.AddScoped<IAuthorService, AuthorService>();
+
+            services.AddScoped<IPublisherService, PublisherService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

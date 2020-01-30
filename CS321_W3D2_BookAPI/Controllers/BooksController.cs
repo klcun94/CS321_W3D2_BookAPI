@@ -13,11 +13,11 @@ namespace CS321_W3D2_BookAPI.Controllers
         // Constructor
         public BooksController(IBookService bookService)
         {
-            // TODO: keep a reference to the service so we can use below
+            // keep a reference to the service so we can use below
             _bookService = bookService;
         }
 
-        // TODO: get all books
+        // get all books
         // GET api/books
         [HttpGet]
         public IActionResult Get()
@@ -56,7 +56,7 @@ namespace CS321_W3D2_BookAPI.Controllers
             return CreatedAtAction("Get", new { Id = newBook.Id }, newBook);
         }
 
-        // TODO: update an existing book
+        // update an existing book
         // PUT api/books/:id
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Book updatedBook)
@@ -66,7 +66,7 @@ namespace CS321_W3D2_BookAPI.Controllers
             return Ok(book);
         }
 
-        // TODO: delete an existing book
+        // delete an existing book
         // DELETE api/books/:id
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
